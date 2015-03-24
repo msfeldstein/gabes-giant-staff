@@ -119,12 +119,15 @@ $ ->
     __shader
 
   animate = () ->
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    time += 0.01;
-    for x in [0..LED_WIDTH]
-      for y in [0..LEDS_HIGH]
-        [r,g,b] = shader(x,y, LED_WIDTH, LEDS_HIGH)
-        drawCircle(x, y, 255 * r, 255 * g, 255 * b)
+    try
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      time += 0.01;
+      for x in [0..LED_WIDTH]
+        for y in [0..LEDS_HIGH]
+          [r,g,b] = shader(x,y, LED_WIDTH, LEDS_HIGH)
+          drawCircle(x, y, 255 * r, 255 * g, 255 * b)
+    catch e
+      # nothin
     requestAnimationFrame(animate);
   requestAnimationFrame(animate);
 
@@ -134,7 +137,10 @@ $ ->
   
 
   update = () ->
-    shader = createFunction editor.value
+    try
+      shader = createFunction editor.value
+    catch e
+      console.log e
   debounceTimer = null
   $(editor).on "change keyup paste", () ->
     console.log "change"
