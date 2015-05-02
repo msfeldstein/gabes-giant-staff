@@ -5,6 +5,17 @@ v = noise.simplex3(0, y / 50 + .5 * time, time);
 return [v,v,v];
 """
 
+Codes.Bars = """
+if (floor(y / 10) == floor(time * 5 % 10)) {
+  r = 1;
+} else {
+  r = 0;
+}
+g = 0
+b = 0
+return [r,g,b];
+"""
+
 Codes.smoke = """
 v = noise.simplex3(x, y / 50 + .5 * time, time);
 return [v,v,v];

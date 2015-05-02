@@ -1,6 +1,7 @@
 @bound = (v) ->
   Math.min(Math.max(v, 0), 255)
 
+@abs = Math.abs
 @pow = Math.pow
 @log = Math.log
 @cos = Math.cos
@@ -9,6 +10,9 @@
 @round = Math.round
 @min = Math.min
 @max = Math.max
+@floor = Math.floor
+@ceil = Math.ceil
+
 @clamp = (v, minimum, maximum) ->
   max(min(v, maximum), minimum)
 

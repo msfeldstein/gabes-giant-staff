@@ -1,4 +1,5 @@
 shader = null
+EDITOR_WIDTH = 400
 
 $ ->
 
@@ -24,10 +25,13 @@ $ ->
     load(selector.val())
 
   resize = () ->
-    $("#editor-column").css('width', 300)
-    $("#canvas-column").css('width', window.innerWidth - 300)
-    canvas.width = window.innerWidth - 300;
-    canvas.height = window.innerHeight;
+    $("#editor-column").css('width', EDITOR_WIDTH)
+    $("#canvas-column").css('width', window.innerWidth - EDITOR_WIDTH)
+    canvas.width = (window.innerWidth - EDITOR_WIDTH) * window.devicePixelRatio;
+    canvas.height = window.innerHeight * window.devicePixelRatio;
+    canvas.style.width = "100%"
+    canvas.style.height = "100%"
+
   $(window).on "resize", resize
   resize()
 
@@ -67,12 +71,12 @@ $ ->
   animate = () ->
     ctx.save()
     time += 0.01;
-    rotation += parameters.rotateSpeed
+    rotation += parameters.rotateSpeed * 0.5
     try
       ctx.globalCompositeOperation = "normal"
       ctx.fillStyle = "rgba(0,0,0,#{1.0 - parameters.feedbackAmount})"
       ctx.fillRect(0, 0, canvas.width, canvas.height);
-      ctx.translate(canvas.width / 2 - LED_SIZE * LED_WIDTH / 2, 20)
+      ctx.translate(canvas.width / 2 - LED_SIZE * LED_WIDTH / 2, canvas.height / 2 - LED_SIZE * LEDS_HIGH / 2)
 
 
       ctx.translate(LED_SIZE * LED_WIDTH / 2, LED_SIZE * LEDS_HIGH / 2)
