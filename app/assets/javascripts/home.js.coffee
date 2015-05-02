@@ -1,6 +1,7 @@
 shader = null
 
 $ ->
+
   parameters = {
     feedbackAmount: 0.1
     rotateSpeed: 0.01,
@@ -21,8 +22,14 @@ $ ->
          .text(name));
   selector.on "change", () ->
     load(selector.val())
-  canvas.width = window.innerWidth / 2;
-  canvas.height = window.innerHeight;
+
+  resize = () ->
+    $("#editor-column").css('width', 300)
+    $("#canvas-column").css('width', window.innerWidth - 300)
+    canvas.width = window.innerWidth - 300;
+    canvas.height = window.innerHeight;
+  $(window).on "resize", resize
+  resize()
 
 
   # canvas.style.webkitFilter = "blur(1px)";
