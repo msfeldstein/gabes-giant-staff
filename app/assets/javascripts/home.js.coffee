@@ -72,7 +72,7 @@ $ ->
     rot1 = rot1Deg / 360 * Math.PI * 2
     rot2 = rot2Deg / 360 * Math.PI * 2
     ctx.beginPath()
-    
+
     color = "rgb(#{parseInt(c1[0] * 255)}, #{parseInt(c1[1] * 255)}, #{parseInt(c1[2] * 255)})"
     if parameters.rotateSpeed != 0
 
@@ -108,7 +108,7 @@ $ ->
     rotation += parameters.rotateSpeed * 0.5
     try
       ctx.globalCompositeOperation = "normal"
-      ctx.fillStyle = "rgba(0,0,0,#{1.0 - parameters.feedbackAmount})"
+      ctx.fillStyle = "rgba(0,0,0,#{1.0 - Math.pow(parameters.feedbackAmount, .25)})"
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       ctx.translate(canvas.width / 2, canvas.height / 2)
 
