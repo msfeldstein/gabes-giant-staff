@@ -5,6 +5,7 @@ SPEED = 0.01
 $ ->
 
   parameters = {
+    run: true,
     speed: 0.01,
     feedbackAmount: 0.1,
     rotateSpeed: 0.01,
@@ -15,7 +16,7 @@ $ ->
   gui.add(parameters, "feedbackAmount", 0.0, 1.0)
   gui.add(parameters, "rotateSpeed", 0.0, 1.0).step(0.01).listen()
   parameters.rotateSpeed = 0
-  gui.add(parameters, "translate")
+  gui.add(parameters, "run")
 
   canvas = document.getElementById("canvas")
   editor = document.getElementById("editor")
@@ -71,17 +72,19 @@ $ ->
     rot1 = rot1Deg / 360 * Math.PI * 2
     rot2 = rot2Deg / 360 * Math.PI * 2
     ctx.beginPath()
-
+    
     color = "rgb(#{parseInt(c1[0] * 255)}, #{parseInt(c1[1] * 255)}, #{parseInt(c1[2] * 255)})"
-    ctx.strokeStyle = color
-    ctx.lineWidth = LED_SIZE / 2
-    ctx.arc(0, 0, r, theta, theta + thetaDelta)
-    ctx.stroke()
+    if parameters.rotateSpeed != 0
 
-    ctx.beginPath()
-    ctx.fillStyle = color
-    ctx.arc(r * Math.cos(theta), r * Math.sin(theta), LED_SIZE * 0.25, 0, Math.PI * 2, false)
-    ctx.fill()
+      ctx.strokeStyle = color
+      ctx.lineWidth = LED_SIZE / 2
+      ctx.arc(0, 0, r, theta, theta + thetaDelta)
+      ctx.stroke()
+    else
+      ctx.beginPath()
+      ctx.fillStyle = color
+      ctx.arc(r * Math.cos(theta), r * Math.sin(theta), LED_SIZE * 0.25, 0, Math.PI * 2, false)
+      ctx.fill()
 
 
   time = 0
@@ -98,6 +101,8 @@ $ ->
     __shader
 
   animate = () ->
+    requestAnimationFrame(animate);
+    if !parameters.run then return
     ctx.save()
     time += parameters.speed;
     rotation += parameters.rotateSpeed * 0.5
@@ -114,7 +119,7 @@ $ ->
 
       ctx.globalCompositeOperation = "lighter"
 
-      for x in [0..LED_WIDTH]
+      for x in [0..LED_WIDTH-1]
         for y in [0..LEDS_HIGH]
           [r,g,b] = color1 = shader(x,y, LED_WIDTH, LEDS_HIGH, time)
           color2 = shader(x,y, LED_WIDTH, LEDS_HIGH, time + parameters.speed)
@@ -126,7 +131,7 @@ $ ->
       console.log e
       # nothin
     ctx.restore()
-    requestAnimationFrame(animate);
+
   requestAnimationFrame(animate);
 
   load = (code) ->
