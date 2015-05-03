@@ -1,5 +1,12 @@
 @Codes = {}
 
+# Codes.Default = """
+# r = y / HEIGHT;
+# r *= r;
+# g = sin(time * 3 + y/3) * 0.5 + 0.5;
+# return [r,g,0];
+# """
+
 Codes["1D noise"] = """
 v = noise.simplex3(0, y / 50 + .5 * time, time);
 return [v,v,v];

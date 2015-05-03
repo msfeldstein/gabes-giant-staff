@@ -12,7 +12,7 @@ $ ->
     translate: false
   }
   gui = new dat.GUI
-  gui.add(parameters, "speed", 0, 0.1)
+  gui.add(parameters, "speed", 0, 0.1).name("Pattern Speed")
   gui.add(parameters, "feedbackAmount", 0.0, 1.0)
   gui.add(parameters, "rotateSpeed", 0.0, 1.0).step(0.01).listen()
   parameters.rotateSpeed = 0
@@ -142,6 +142,7 @@ $ ->
   update = () ->
     try
       shader = createFunction editor.value
+      localStorage.setItem("lastSketch", editor.value)
     catch e
       console.log e
   debounceTimer = null
@@ -149,4 +150,5 @@ $ ->
     console.log "change"
     clearTimeout debounceTimer
     debounceTimer = setTimeout update, 500
-  load(Codes["2D noise"])
+  lastSketch = localStorage.getItem("lastSketch")
+  load(lastSketch || Codes["2D noise"])

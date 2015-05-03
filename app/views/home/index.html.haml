@@ -1,5 +1,34 @@
 .columns
   .column#editor-column
+    .instructions
+      %b Inputs
+      .parameter
+        .parameter-name
+          x
+        .description
+          x-index of LED
+      .parameter
+        .parameter-name
+          y
+        .description
+          y-index of LED
+      .parameter
+        .parameter-name
+          time
+        .description
+          incrementing time starting from 0
+      .parameter
+        .parameter-name
+          WIDTH
+        .description
+          Number of LEDs wide in this staff
+      .parameter
+        .parameter-name
+          HEIGHT
+        .description
+          Number of LEDs high in this staff
+      %br
+      %b Return an array of [r,g,b] values from 0-1
     %select.code-selector
       %option
         Presets
