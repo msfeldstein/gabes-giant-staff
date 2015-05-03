@@ -4,6 +4,10 @@ Codes["1D noise"] = """
 v = noise.simplex3(0, y / 50 + .5 * time, time);
 return [v,v,v];
 """
+Codes.Random = """
+v = sin((y - time) *cos(y + time));
+return [v,0,v*0.3];
+"""
 
 Codes.Bars = """
 if (floor(y / 10) == floor(time * 5 % 10)) {
