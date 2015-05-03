@@ -9,12 +9,15 @@ $ ->
     speed: 0.01,
     feedbackAmount: 0.1,
     rotateSpeed: 0.01,
-    translate: false
+    translate: false,
+    Share: () ->
+      prompt "Share this link", window.location + "/#" + encodeURIComponent(JSON.stringify(editor.value))
   }
   gui = new dat.GUI
   gui.add(parameters, "speed", 0, 0.1).name("Pattern Speed")
   gui.add(parameters, "feedbackAmount", 0.0, 1.0)
   gui.add(parameters, "rotateSpeed", 0.0, 1.0).step(0.01).listen()
+  gui.add(parameters, "Share")
   parameters.rotateSpeed = 0
   gui.add(parameters, "run")
 
@@ -150,5 +153,7 @@ $ ->
     console.log "change"
     clearTimeout debounceTimer
     debounceTimer = setTimeout update, 500
-  lastSketch = localStorage.getItem("lastSketch")
+  if window.location.hash
+    lastSketch = JSON.parse(decodeURIComponent(window.location.hash.substring(1)))
+  lastSketch ||= localStorage.getItem("lastSketch")
   load(lastSketch || Codes["2D noise"])
